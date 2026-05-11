@@ -2139,12 +2139,14 @@
             actionButton.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
+                console.log('Action button tapped', { diamondsCount: diamonds.length });
                 
                 let nearestDiamond = null;
                 let nearestDistance = Infinity;
                 
                 diamonds.forEach((diamond, index) => {
                     const dist = camera.position.distanceTo(diamond.position);
+                    console.log(`Diamond ${index}: distance = ${dist.toFixed(2)}, activated = ${diamond.userData.activated}`);
                     if (dist < 3 && dist < nearestDistance) {
                         nearestDistance = dist;
                         nearestDiamond = diamond;
@@ -2153,9 +2155,12 @@
                 
                 if (nearestDiamond) {
                     const index = nearestDiamond.userData.index;
+                    console.log('Found nearest diamond:', index);
                     if (index !== undefined) {
                         showQuestion(index);
                     }
+                } else {
+                    console.log('No diamond found within range');
                 }
             });
             
